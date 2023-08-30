@@ -8,6 +8,22 @@ const Form = () => {
     const [subject, setSubject] = useState('physical');
     const { tg } = useTelegram();
 
+    const onSendData = useCallback(() => {
+        const data = {
+            country,
+            street,
+            subject,
+        };
+        tg.sendData(JSON.stringify(data));
+    }, [country, street, subject]);
+
+    useEffect(() => {
+        tg.onEvent('mainButtonClicked', onSendData);
+        return () => {
+            tg.offEvent('mainButtonClicked', onSendData);
+        };
+    }, [onSendData]);
+
     useEffect(() => {
         tg.MainButton.setParams({
             text: 'Отправить данные',
@@ -15,7 +31,7 @@ const Form = () => {
     }, []);
 
     useEffect(() => {
-        if (!country || !street) {
+        if (!street || !country) {
             tg.MainButton.hide();
         } else {
             tg.MainButton.show();
@@ -35,29 +51,29 @@ const Form = () => {
     };
 
     return (
-        <div className="form">
+        <div className={'form'}>
             <h3>Введите ваши данные</h3>
             <input
-                className="input"
+                className={'input'}
                 type="text"
-                placeholder="Страна"
+                placeholder={'Страна'}
                 value={country}
                 onChange={onChangeCountry}
             />
             <input
-                className="input"
+                className={'input'}
                 type="text"
-                placeholder="Улица"
+                placeholder={'Улица'}
                 value={street}
                 onChange={onChangeStreet}
             />
             <select
-                className="select"
                 value={subject}
                 onChange={onChangeSubject}
+                className={'select'}
             >
-                <option value="physical">Виз. лицо</option>
-                <option value="legal">Юр. лицо</option>
+                <option value={'physical'}>Физ. лицо</option>
+                <option value={'legal'}>Юр. лицо</option>
             </select>
         </div>
     );
