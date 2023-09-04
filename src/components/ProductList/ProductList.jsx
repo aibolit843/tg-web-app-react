@@ -63,6 +63,7 @@ const getTotalPrice = (items = []) => {
 const ProductList = () => {
     const [addedItems, setAddedItems] = useState([]);
     const { tg } = useTelegram();
+    let btnText = 'Добавить в корзину';
 
     const onAdd = (product) => {
         const alreadyAdded = addedItems.find((item) => item.id === product.id);
@@ -70,8 +71,12 @@ const ProductList = () => {
 
         if (alreadyAdded) {
             newItems = addedItems.filter((item) => item.id !== product.id);
+            btnText = 'Добавить в корзину';
+            console.log(btnText);
         } else {
             newItems = [...addedItems, product];
+            btnText = 'Добавлено в корзину';
+            console.log(btnText);
         }
 
         setAddedItems(newItems);
@@ -94,6 +99,7 @@ const ProductList = () => {
                     key={item.id}
                     onAdd={onAdd}
                     className={'item'}
+                    text={btnText}
                 />
             ))}
         </div>
