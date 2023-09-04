@@ -9,48 +9,56 @@ const products = [
         title: 'Джинсы',
         price: 5000,
         description: 'Синего цвета, прямые',
+        buttunText: 'Добавлено в крзину',
     },
     {
         id: '2',
         title: 'Куртка',
         price: 12000,
         description: 'Зеленого цвета, теплая',
+        buttunText: 'Добавлено в крзину',
     },
     {
         id: '3',
         title: 'Джинсы 2',
         price: 5000,
         description: 'Синего цвета, прямые',
+        buttunText: 'Добавлено в крзину',
     },
     {
         id: '4',
         title: 'Куртка 8',
         price: 122,
         description: 'Зеленого цвета, теплая',
+        buttunText: 'Добавлено в крзину',
     },
     {
         id: '5',
         title: 'Джинсы 3',
         price: 5000,
         description: 'Синего цвета, прямые',
+        buttunText: 'Добавлено в крзину',
     },
     {
         id: '6',
         title: 'Куртка 7',
         price: 600,
         description: 'Зеленого цвета, теплая',
+        buttunText: 'Добавлено в крзину',
     },
     {
         id: '7',
         title: 'Джинсы 4',
         price: 5500,
         description: 'Синего цвета, прямые',
+        buttunText: 'Добавлено в крзину',
     },
     {
         id: '8',
         title: 'Куртка 5',
         price: 12000,
         description: 'Зеленого цвета, теплая',
+        buttunText: 'Добавлено в крзину',
     },
 ];
 
@@ -63,7 +71,6 @@ const getTotalPrice = (items = []) => {
 const ProductList = () => {
     const [addedItems, setAddedItems] = useState([]);
     const { tg } = useTelegram();
-    let btnText = 'Добавить в корзину';
 
     const onAdd = (product) => {
         const alreadyAdded = addedItems.find((item) => item.id === product.id);
@@ -71,12 +78,8 @@ const ProductList = () => {
 
         if (alreadyAdded) {
             newItems = addedItems.filter((item) => item.id !== product.id);
-            btnText = 'Добавить в корзину';
-            console.log(btnText);
         } else {
             newItems = [...addedItems, product];
-            btnText = 'Добавлено в корзину';
-            console.log(btnText);
         }
 
         setAddedItems(newItems);
@@ -99,7 +102,7 @@ const ProductList = () => {
                     key={item.id}
                     onAdd={onAdd}
                     className={'item'}
-                    text={btnText}
+                    text="Добавить в корзину"
                 />
             ))}
         </div>
